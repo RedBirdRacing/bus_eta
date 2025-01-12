@@ -124,4 +124,18 @@ function updateStation(){
 $(document).ready( () =>{
     updateStation();
     setInterval(updateStation,5000);
+    updateTime();
+    setInterval(updateTime, 60000);
 })
+
+function updateTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('time').innerHTML = `${hours}:${minutes}`;
+}
+
+// Update the time immediately
+//updateTime();
+// Optionally, update the time every minute
+//setInterval(updateTime, 60000);
