@@ -46,13 +46,29 @@
             font-size: 120px;
             font-family: Helvetica; 
         }
+        body {
+            background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            background-size: 1400% 1400%;
+            animation: rainbow 5s ease infinite;
+        }
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <img src="logo-full-v2.0.png" alt="Logo">
         <div class="title">BUS ETA Report</div>
-  a      <span id="time"></span>
+        <span id="time"></span>
     </div>
     <table cellspacing="0" width="1920">
         <tr>
