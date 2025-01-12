@@ -1,5 +1,11 @@
-Made by Marco Leung and Nicholas Chan did some shit to it
+# Bus ETA Report for Hall 8 lab
 
+Branch for rainbow because of the new rainbow function.
+This was made because it was annoying to take out phone and check how long until bus arrives and then run up when it was too late. With this, I can be constantly reminded when to leave the lab.
+
+First project by side project and yapping sub team.
+
+Made by marco lk network and Nicholas did some shit to it
 **Screenshot**
 ![Screenshot](screenshot.jpg)
 Meant to be used on a 1080p monitor, but the screenshot was taken with a 1440p monitor.
