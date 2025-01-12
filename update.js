@@ -123,9 +123,8 @@ function updateStation(){
 
 $(document).ready( () =>{
     updateStation();
-    setInterval(updateStation,5000);
+    setInterval(updateStation,30000);
     updateTime();
-    setInterval(updateTime, 60000);
 })
 
 function updateTime() {

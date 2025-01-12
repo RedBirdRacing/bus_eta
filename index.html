@@ -1,89 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>
-        Station Report
-    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus ETA Report</title>
+    <script src="jquery.min.js"></script>
+    <script src="update.js"></script>
+    <style>
+        h1 {
+            font-size: 120px;
+            font-family: helvetica;
+            text-align: left;
+        }
+        td {
+            border: 1px solid black;
+            margin: 0;
+            font-size: 150px;
+            font-family: Helvetica;
+        }
+        .p1 {
+            font-size: 120px;
+            font-family: Helvetica;
+        }
+        .p2 {
+            font-size: 100px;
+            font-family: Helvetica;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            width: 200px;
+            height: 200px;
+        }
+        .header span {
+            margin-left: auto;
+        }
+        .header .title {
+            font-size: 120px;
+            font-family: Helvetica; 
+        }
+        #time {
+            font-size: 120px;
+            font-family: Helvetica; 
+        }
+    </style>
 </head>
-
-<script src = "jquery.min.js"></script>
-<script src = "update.js"></script>
-
-<style>
-    h1{
-        font-size: 120px;
-        font-family: helvetica;
-        text-align: left;
-    }
-    td{
-        border: 1px solid black;
-        margin: 0;
-        font-size: 150px;
-        font-family:Helvetica; 
-    }
-    p1{
-        font-size: 120px;
-        font-family: Helvetica;
-    }
-    p2{
-        font-size: 100;
-        font-family: Helvetica;
-    }
-</style>
-
-<header>
-</header>
-
-
 <body>
-    <p1>        <img src="logo-full-v2.0.png" width="200" height="200"/>
-        BUS ETA Report         <span id = "time"></span></p1>
-    <table cellspacing = "0" width="1920">
+    <div class="header">
+        <img src="logo-full-v2.0.png" alt="Logo">
+        <div class="title">BUS ETA Report</div>
+        <span id="time"></span>
+    </div>
+    <table cellspacing="0" width="1920">
         <tr>
             <td colspan="2">South Gate</td>
             <td colspan="2">North Gate</td>
         </tr>
         <tr>
-            <td>
-                91M
-            </td>
-            <td>
-                <span id = "91M"></span>
-            </td>
-            <td>
-                792M
-            </td>
-            <td>
-                <span id = "792M"></span>
-            </td>
+            <td>91M</td>
+            <td><span id="91M"></span></td>
+            <td>792M</td>
+            <td><span id="792M"></span></td>
         </tr>
         <tr>
-            <td>
-                91
-            </td>
-            <td>
-                <span id = "91"></span>
-            </td>
-            <td>
-                11M
-            </td>
-            <td>
-                <span id = "11M"></span>
-            </td>
+            <td>91</td>
+            <td><span id="91"></span></td>
+            <td>11M</td>
+            <td><span id="11M"></span></td>
         </tr>
         <tr>
-            <td>
-                11
-            </td>
-            <td>
-                <span id = "11S"></span>
-            </td>
-            <td>
-                GitHub
-            </td>
-            <td>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" width="150" height="150">
-            </td>
+            <td>11</td>
+            <td><span id="11S"></span></td>
+            <td>GitHub</td>
+            <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" width="150" height="150"></td>
         </tr>
     </table>
-    <p2>nice</p2>
-
+    <p class="p2">nice</p>
 </body>
+</html>
