@@ -21,11 +21,13 @@ V2.1 deployed on 2025-04-14.
 ## Notes
 Room is left for using slots for non-ETA objects like images and animations, as well as replacing route numbers with actual displays.
 
-The clock is synced automatically every hour from [timeapi.io](https://www.timeapi.io/api/timezone/zone?timeZone=Asia%2FHong_Kong).
-The clock is the central time-keeping component used to calculate delta from any given ETA timestamp.
-If the page is paused, the clock is paused as well. Refresh the page to get updated ETAs.
+The clock is synced automatically every hour from [timeapi.io](https://www.timeapi.io/api/timezone/zone?timeZone=Asia%2FHong_Kong).  
+The clock is the central time-keeping component used to calculate delta from any given ETA timestamp.  
+If the page is paused, the clock is paused as well. Refresh the page to get updated ETAs.  
+Use the commented-out line in `update.js` to adjust for ping and ensure correct time.
 
-The HTML probably only works if started in a server due to CORS policies of the GMB ETA server. Optionally use a no-cors proxy to bypass this requirement.
+The HTML probably only works if started in a server due to CORS policies of the GMB ETA server.  
+Optionally use a no-cors proxy to bypass this requirement.
 
 The font used is [Open Sans](<https://fonts.googleapis.com/css?family=Open Sans>).
 
