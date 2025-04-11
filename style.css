@@ -86,6 +86,7 @@ td.top-right {
     object-position: center center; /* Ensures center of the image shows */
     display: block;
     image-rendering: smooth;
+    margin-right: -0.5%
 }
 
 
@@ -100,15 +101,17 @@ td.top-right {
 }
 
 #time {
-    font-size: 120px;
+    font-size: 140px;
     font-family: 'Open Sans';
     font-weight: 600;
+    line-height: 1.1;
 }
 
 #timeSynced {
     font-size: 40px;
     font-family: 'Open Sans';
     font-weight: 400;
+    line-height: 1.5;
 }
 
 .tdnum {
