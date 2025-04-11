@@ -1,83 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus ETA Report</title>
     <script src="jquery.min.js"></script>
     <script src="update.js"></script>
-    <style>
-        h1 {
-            font-size: 120px;
-            font-family: helvetica;
-            text-align: left;
-        }
-        td {
-            border: 1px solid black;
-            margin: 0;
-            font-size: 150px;
-            font-family: Helvetica;
-        }
-        .p1 {
-            font-size: 120px;
-            font-family: Helvetica;
-        }
-        .p2 {
-            font-size: 100px;
-            font-family: Helvetica;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header img {
-            width: 200px;
-            height: 200px;
-        }
-        .header span {
-            margin-left: auto;
-        }
-        .header .title {
-            font-size: 120px;
-            font-family: Helvetica; 
-        }
-        #time {
-            font-size: 120px;
-            font-family: Helvetica; 
-        }
-    </style>
+    <link rel="stylesheet" href="style.css"> <!-- Link external CSS -->
 </head>
+
 <body>
-    <div class="header">
-        <img src="logo-full-v2.0.png" alt="Logo">
-        <div class="title">BUS ETA Report</div>
-        <span id="time"></span>
+    <!-- Background GIF -->
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp" class="background-gif" alt="Background Animation">
+
+    <div class="header" , style="align-items: left;", overflow="hidden">
+        <img class="logo" src="logo-full-v2.0.png" alt="Logo">
+        <div class="title">ETA&thinsp;|&thinsp;GitHub:&thinsp;</div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" width="100" height="100">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <span id="time">Starting</span>
+            <span id="timeSynced">Last synced: syncing</span>
+        </div>
     </div>
-    <table cellspacing="0" width="1920">
+    <table>
         <tr>
-            <td colspan="2">South Gate</td>
-            <td colspan="2">North Gate</td>
+            <td class="top-left" colspan="2">South Gate</td>
+            <td class="top-right" colspan="2">North Gate</td>
         </tr>
         <tr>
-            <td>91M</td>
-            <td><span id="91M"></span></td>
-            <td>792M</td>
-            <td><span id="792M"></span></td>
+            <td class="tdnum"><span id="S1Num"></span></td>
+            <td class="tddat"><span id="S1"></span></td>
+            <td class="tdnum"><span id="N1Num"></span></td>
+            <td class="tddat"><span id="N1"></span></td>
         </tr>
         <tr>
-            <td>91</td>
-            <td><span id="91"></span></td>
-            <td>11M</td>
-            <td><span id="11M"></span></td>
+            <td class="tdnum"><span id="S2Num"></span></td>
+            <td class="tddat"><span id="S2"></span></td>
+            <td class="tdnum"><span id="N2Num"></span></td>
+            <td class="tddat"><span id="N2"></span></td>
         </tr>
         <tr>
-            <td>11</td>
-            <td><span id="11S"></span></td>
-            <td>GitHub</td>
-            <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" width="150" height="150"></td>
+            <td class="tdnumBL"><span id="S3Num"></span></td>
+            <td class="tddat"><span id="S3"></span></td>
+            <td class="tdnum"><span id="N3Num"></span></td>
+            <td class="tddatBR"><span id="N3"></span></td>
         </tr>
     </table>
-    <p class="p2">nice</p>
+    <p class="p2">nothing to see here</p>
+    <br>
+    <p class="p2">nothing to see here</p>
+    <br>
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp">
+    <br>
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp">
 </body>
+
 </html>
