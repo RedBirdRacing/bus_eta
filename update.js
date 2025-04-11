@@ -125,80 +125,92 @@ content = {
     "11Y": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: false,
+        content: ["--", "--"],
     },
 
     "11Z": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "11MZ": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: false,
+        content: ["--", "--"],
     },
 
 
     "11SY": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: false,
+        content: ["--", "--"],
     },
 
     "11SZ": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "104Y": {
         url: "",
         type: "gmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "91Z": {
         url: "",
         type: "kmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "91MY": {
         url: "",
         type: "kmb",
-        content: "--",
+        isSouth: false,
+        content: ["--", "--"],
     },
 
     "91MZ": {
         url: "",
         type: "kmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "91PZ": {
         url: "",
         type: "kmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "291PY": {
         url: "",
         type: "kmb",
-        content: "--",
+        isSouth: true,
+        content: ["--", "--"],
     },
 
     "792MZ": {
         url: "",
         type: "ctb",
-        content: "--",
+        isSouth: false,
+        content: ["--", "--"],
     },
 
     "--": {
         url: "",
         type: "--",
-        content: "--",
+        content: ["--", "--"],
     }
 };
 
@@ -343,21 +355,44 @@ async function updateLayout() {
 // updates display every second using existing data
 async function updateDisplay() {
     for (const [layoutKey, rtList] of Object.entries(layout)) {
-        const displayTime = 3 // 3 seconds each for flipping displays
+        const displayTime = 4 // 4 seconds each for flipping displays
         cycleLength = displayTime * rtList.length;
         rtNum = rtList[Math.floor((dateSecond % cycleLength) / displayTime)];
 
         // short-circuit evaluation, if first condition false everything skipped
-        if (rtNum != "" && (content[rtNum].type == "gmb" || content[rtNum].type == "kmb" || content[rtNum].type == "ctb") && (content[rtNum].content != "--") && content[rtNum].content) {
-            delta = Date.parse(content[rtNum].content) - currentTime;
-            document.getElementById(layoutKey).innerText = (Math.floor(delta / 60000)).toString() + ":" + (Math.floor(delta / 1000) % 60).toString().padStart(2, '0');
+        // if rtNum isn't empty, content type is ETA, ETA exist
+        if (rtNum != "" && (content[rtNum].type == "gmb" || content[rtNum].type == "kmb" || content[rtNum].type == "ctb") && content[rtNum].content) {
+            for (var i = 0; i < 2; ++i) {
+                if (content[rtNum].content[i] && content[rtNum].content[i] != "--") {
+                    delta = Date.parse(content[rtNum].content[i]) - currentTime;
+                    if (delta > 0) {
+                        document.getElementById(layoutKey + "_" + i.toString()).innerText = (Math.floor(delta / 60000)).toString();
+                        colorDelta = delta - (content[rtNum].isSouth ? 780000 : 600000);
+                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(" + Math.min(Math.max(450 - colorDelta / 2000, 0), 255).toString() + "," + Math.max(Math.min(colorDelta / 2000, 255), 0).toString() + ",0";
+                    }
+                    else {
+                        document.getElementById(layoutKey + "_" + i.toString()).innerText = "--";
+                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(150,150,150)";
+                    }
+                }
+                else {
+                    document.getElementById(layoutKey + "_" + i.toString()).innerText = "--";
+                    document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(150,150,150)";
+                }
+            }
             document.getElementById(layoutKey + "Num").innerText = rtNum.slice(0, -1);
 
         }
         // for "--" rtNum or invalid ETA (content "--")
         else if (rtNum != "") {
-            document.getElementById(layoutKey).innerText = content[rtNum].content;
+            document.getElementById(layoutKey + "_0").innerText = content[rtNum].content[0];
+            document.getElementById(layoutKey + "_1").innerText = content[rtNum].content[1];
             document.getElementById(layoutKey + "Num").innerText = rtNum;
+            if (rtNum == "--") {
+                document.getElementById(layoutKey + "Num").style.color = "rgb(150,150,150)";
+                document.getElementById(layoutKey + "_0").style.color = "rgb(150,150,150)";
+                document.getElementById(layoutKey + "_1").style.color = "rgb(150,150,150)";
+            }
         }
     }
 }
@@ -383,23 +418,30 @@ async function updateStation(routeNum) {
         let data = await response.json();
 
         routeType = content[routeNum]["type"];
-        let etaFieldPath;
+        let etaRetList;
 
         if (routeType === "gmb") {
-            etaFieldPath = data["data"]["eta"].map(item => item["timestamp"]);
+            etaRetList = data["data"]["eta"].map(item => item["timestamp"]);
         } else if (["kmb", "ctb"].includes(routeType)) {
-            etaFieldPath = data["data"].map(item => item["eta"]);
+            etaRetList = data["data"].map(item => item["eta"]);
         }
 
-        if (etaFieldPath && etaFieldPath.length > 0) {
-            for (i = 0; i < 3; ++i) {
-                let time_diff = Date.parse(etaFieldPath[i]) - currentTime;
-                if (time_diff > 480000 || etaFieldPath.length < (i + 2)) {
-                    content[routeNum].content = etaFieldPath[i];
+        if (etaRetList && etaRetList.length > 0) {
+            content[routeNum].content[0] = "--";
+            content[routeNum].content[1] = "--";
+            for (i = 0; i < etaRetList.length; ++i) {
+                let time_diff = Date.parse(etaRetList[i]) - currentTime;
+                // North Gate 10 minutes -> skip to next ETA
+                // South Gate 13 (just enough for Tai Po Tsai Kau)
+                // 13*60*1000 = 780_000; 10*60*1000 = 600_000
+                if (time_diff > (content[routeNum].isSouth ? 780_000 : 600_000)) {
+                    content[routeNum].content[0] = etaRetList[i];
+                    if (i < 2) {
+                        content[routeNum].content[1] = etaRetList[i + 1];
+                    }
                     return;
                 }
             }
-            content[routeNum].content = "--"
             return;
         }
     }
@@ -443,6 +485,12 @@ dateSecond = -1;
 var currentTime;
 async function startClock() {
     currentTime = await fetchTime();
+
+    // Add milliseconds for slow computers (includes Raspberry Pi) or testing only
+    // For hall 8, add 800 ms
+    // currentTime = new Date(currentTime.getTime() + 800);
+    // currentTime = new Date(currentTime.getTime() - 300000);
+
     document.getElementById('timeSynced').innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
     console.log("Time synced successfully at: " + currentTime.toTimeString().split(' ')[0]);
 

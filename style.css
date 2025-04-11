@@ -15,8 +15,8 @@ html {
     object-fit: cover;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.03;
-    /* ← sets the GIF to 3% opacity */
+    opacity: 0.07;
+    /* sets the GIF opacity */
 }
 
 /* Original styles */
@@ -113,28 +113,24 @@ td.top-right {
 
 .tdnum {
     text-align: right;
-    padding-right: 40px;
+    padding-right: 1.25%;
     width: 25%;
 }
 
 .tdnumBL {
     text-align: right;
-    padding-right: 40px;
+    padding-right: 1.25%;
     width: 25%;  
     border-bottom-left-radius: 24px;
 }
 
 .tddat {
-    text-align: right;
-    padding-left: 0px;
-    padding-right: 40px;
-    width: 25%;
+    text-align: center;
+    width: 12.5%;
 }
 
 .tddatBR {
-    text-align: right;
-    padding-left: 0px;
-    padding-right: 40px;
-    width: 25%;
+    text-align: center;
+    width: 12.5%;
     border-bottom-right-radius: 24px;
 }

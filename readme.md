@@ -4,12 +4,20 @@ This was made because it was annoying to take out phone and check how long until
 
 First project by Side project and Yapping sub team of Red Bird Racing EVRT.
 
-V2 deployed on 2025-04-07.
+V2.0 deployed on 2025-04-07.
+V2.1 deployed on 2025-04-14.
+
+## Screenshot
+![V2 screenshot](ScreenshotV2.png)
+
+Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out.
 
 ## Versions
 V1 made by marco lk network and Nicholas(@Nexolas520) did some shit to it
 
 V2 is a from-the-ground-up rewrite of the JavaScript component used to update the ETA and clock by Carson(@Planeson), aimed to increase functionality and efficiency.
+V2.0 features a single ETA with seconds;
+V2.1 features 2 coloured ETAs with only minutes.
 
 ## Notes
 Room is left for using slots for non-ETA objects like images and animations, as well as replacing route numbers with actual displays.
@@ -22,18 +30,27 @@ The HTML probably only works if started in a server due to CORS policies of the 
 
 The font used is [Open Sans](<https://fonts.googleapis.com/css?family=Open Sans>).
 
-Layout is updated every minute. The cycling is done every 3 seconds (`const displayTime`). ETA is fetched every 10 seconds (doesn't mean data changes every 10 seconds, depends on ETA server).
+Layout is updated every minute. The cycling is done every 4 seconds (`const displayTime`). ETA is fetched every 10 seconds (doesn't mean data changes every 10 seconds, depends on ETA server).
 
-To optimize for GMB usability, ETA less than 8 minutes is omitted. The second/third ETA would be used instead. This helps to make 11/M actually usable, if you trust GMB ETA.
+To optimize for GMB usability, ETA less than 10/13 minutes is omitted. The second/third ETA would be used instead. This helps to make 11/M actually usable, if you trust GMB ETA.
 
 Using Firefox breaks the font rendering and the page looks horrible.
 
-## Screenshot
-![V2 screenshot](ScreenshotV2.png)
+### Colours
+V2.1 introduced colours to the ETA.
+Red means you gotta run
+Yellow means you should prepare to go
+For North Gate, the estimated walking time is 10 minutes.
+For South Gate, the estimated walking time is 13 minutes (you gain 5 extra minutes by walking to [Tai Po Tsai Kau]).
+<details>
+    <summary>Walking route from Hall 8 to Tai Po Tsai Kau</summary>
+    ![Walking Route to Tai Po Tsai Kau](TaiPoTsaiKau.png)
+    To follow the path yourself, you can use HKeMobility (HKUST app of choice for travel time calculation).
+    Remember to "wave" at the driver for them to stop!
+</details>
 
-Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out.
-
-
+The ETA colours are calculated with the below formula. To ensure readability, actual yellow (255,255,0) is avoided.
+![RGB Functions](RGBFunction.png)
 
 
 **API references**
