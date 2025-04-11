@@ -4,9 +4,6 @@ This was made because it was annoying to take out phone and check how long until
 
 First project by Side project and Yapping sub team of Red Bird Racing EVRT.
 
-V2.0 deployed on 2025-04-07.
-V2.1 deployed on 2025-04-14.
-
 ## Screenshot
 ![V2 screenshot](ScreenshotV2.png)
 
@@ -15,10 +12,12 @@ Meant for 1080p displays. For other resolutions, you are suggested to simply zoo
 ## Versions
 V1 made by marco lk network and Nicholas(@Nexolas520) did some shit to it
 
-V2 is a from-the-ground-up rewrite of the JavaScript component used to update the ETA and clock by Carson(@Planeson), aimed to increase functionality and efficiency.
-V2.0 features a single ETA with seconds;
+V2 is a from-the-ground-up rewrite of the JavaScript component used to update the ETA and clock by Carson(@Planeson), aimed to increase functionality and efficiency.  
+V2.0 features a single ETA with seconds;  
 V2.1 features 2 coloured ETAs with only minutes.
 
+V2.0 deployed on 2025-04-07.  
+V2.1 deployed on 2025-04-14.
 ## Notes
 Room is left for using slots for non-ETA objects like images and animations, as well as replacing route numbers with actual displays.
 
@@ -37,16 +36,19 @@ To optimize for GMB usability, ETA less than 10/13 minutes is omitted. The secon
 Using Firefox breaks the font rendering and the page looks horrible.
 
 ### Colours
-V2.1 introduced colours to the ETA.
-Red means you gotta run
-Yellow means you should prepare to go
-For North Gate, the estimated walking time is 10 minutes.
-For South Gate, the estimated walking time is 13 minutes (you gain 5 extra minutes by walking to [Tai Po Tsai Kau]).
+V2.1 introduced colours to the ETA.  
+🔴 means you gotta run  
+🟡 means you should prepare to go  
+🟢 means you can do a bit of stuff first  
+For North Gate, the estimated walking time is 10 minutes.  
+For South Gate, the estimated walking time is 13 minutes (you gain 5 extra minutes by walking to [Tai Po Tsai Kau](https://maps.app.goo.gl/XYBwCYXtCV9PCvBP7)).  
 <details>
-    <summary>Walking route from Hall 8 to Tai Po Tsai Kau</summary>
-    ![Walking Route to Tai Po Tsai Kau](TaiPoTsaiKau.png)
-    To follow the path yourself, you can use HKeMobility (HKUST app of choice for travel time calculation).
-    Remember to "wave" at the driver for them to stop!
+<summary>Walking route from Hall 8 to Tai Po Tsai Kau</summary>
+    
+![Walking Route to Tai Po Tsai Kau](TaiPoTsaiKau.png)
+To follow the path yourself, you can use HKeMobility (HKUST app of choice for travel time calculation).  
+Remember to "wave" at the driver for them to stop!
+
 </details>
 
 The ETA colours are calculated with the below formula. To ensure readability, actual yellow (255,255,0) is avoided.
