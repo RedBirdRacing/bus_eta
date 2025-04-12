@@ -5,7 +5,7 @@ This was made because it was annoying to take out phone and check how long until
 First project by Side project and Yapping sub team of Red Bird Racing EVRT.
 
 ## Screenshot
-![V2 screenshot](ScreenshotV2.png)
+![V2.1 screenshot](ScreenshotV2.1.png)
 
 Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out.
 
