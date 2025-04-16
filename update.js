@@ -381,6 +381,7 @@ async function updateDisplay() {
                 }
             }
             document.getElementById(layoutKey + "Num").innerText = rtNum.slice(0, -1);
+            document.getElementById(layoutKey + "Num").style.color = "black";
 
         }
         // for "--" rtNum or invalid ETA (content "--")
@@ -411,13 +412,17 @@ async function updateData() {
 async function updateStation(routeNum) {
     if (routeNum == "--") { return; }
     try {
-        const response = await fetch(content[routeNum].url);
+        const originalUrl = content[routeNum].url;
+        const proxyUrl = `http://localhost:3000/proxy?url=${encodeURIComponent(originalUrl)}`;
+
+        const response = await fetch(proxyUrl);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
+
         let data = await response.json();
 
-        routeType = content[routeNum]["type"];
+        const routeType = content[routeNum]["type"];
         let etaRetList;
 
         if (routeType === "gmb") {
@@ -429,11 +434,8 @@ async function updateStation(routeNum) {
         if (etaRetList && etaRetList.length > 0) {
             content[routeNum].content[0] = "--";
             content[routeNum].content[1] = "--";
-            for (i = 0; i < etaRetList.length; ++i) {
+            for (let i = 0; i < etaRetList.length; ++i) {
                 let time_diff = Date.parse(etaRetList[i]) - currentTime;
-                // North Gate 10 minutes -> skip to next ETA
-                // South Gate 13 (just enough for Tai Po Tsai Kau)
-                // 13*60*1000 = 780_000; 10*60*1000 = 600_000
                 if (time_diff > (content[routeNum].isSouth ? 780_000 : 600_000)) {
                     content[routeNum].content[0] = etaRetList[i];
                     if (i < 2) {
@@ -442,7 +444,6 @@ async function updateStation(routeNum) {
                     return;
                 }
             }
-            return;
         }
     }
     catch (error) {
