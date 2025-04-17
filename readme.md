@@ -1,23 +1,15 @@
-# Bus ETA Report for Hall 8 lab
+# Bus ETA Report for Hall VIII lab
 
-This was made because it was annoying to take out phone and check how long until bus arrives and then run up when it was too late. With this, I can be constantly reminded when to leave the lab.
-
-First project by Side project and Yapping sub team of Red Bird Racing EVRT.
+This was made because it was annoying to take out phone and check how long until bus arrives and then run up when it was too late. With this, I can be constantly reminded when to leave the lab.  
+In Hall VIII, the ETA is run by a Raspberry Pi.  
+First project by Side project and Yapping sub team of Red Bird Racing EVRT.  
+Read the wiki to learn how to install and use the ETA.  
 
 ## Screenshot
 ![V2.1 screenshot](ScreenshotV2.1.png)
 
 Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out.
 
-## Versions
-V1 made by marco lk network and Nicholas(@Nexolas520) did some shit to it
-
-V2 is a from-the-ground-up rewrite of the JavaScript component used to update the ETA and clock by Carson(@Planeson), aimed to increase functionality and efficiency.  
-V2.0 features a single ETA with seconds;  
-V2.1 features 2 coloured ETAs with only minutes.
-
-V2.0 deployed on 2025-04-07.  
-V2.1 deployed on 2025-04-14.
 ## Notes
 Room is left for using slots for non-ETA objects like images and animations, as well as replacing route numbers with actual displays.
 
@@ -26,8 +18,7 @@ The clock is the central time-keeping component used to calculate delta from any
 If the page is paused, the clock is paused as well. Refresh the page to get updated ETAs.  
 Use the commented-out line in `update.js` to adjust for ping and ensure correct time.
 
-The HTML probably only works if started in a server due to CORS policies of the GMB ETA server.  
-Optionally use a no-cors proxy to bypass this requirement.
+For performance, v2.2 has migrated to a CORS proxy solution. To use this in a python3 http server, use v2.1 or below.  
 
 The font used is [Open Sans](<https://fonts.googleapis.com/css?family=Open Sans>).
 
@@ -36,36 +27,3 @@ Layout is updated every minute. The cycling is done every 4 seconds (`const disp
 To optimize for GMB usability, ETA less than 10/13 minutes is omitted. The second/third ETA would be used instead. This helps to make 11/M actually usable, if you trust GMB ETA.
 
 Using Firefox breaks the font rendering and the page looks horrible.
-
-### Colours
-V2.1 introduced colours to the ETA.  
-🔴 means you gotta run  
-🟡 means you should prepare to go  
-🟢 means you can do a bit of stuff first  
-For North Gate, the estimated walking time is 10 minutes.  
-For South Gate, the estimated walking time is 13 minutes (you gain 5 extra minutes by walking to [Tai Po Tsai Kau](https://maps.app.goo.gl/XYBwCYXtCV9PCvBP7)).  
-<details>
-<summary>Walking route from Hall 8 to Tai Po Tsai Kau</summary>
-    
-![Walking Route to Tai Po Tsai Kau](TaiPoTsaiKau.png)
-To follow the path yourself, you can use HKeMobility (HKUST app of choice for travel time calculation).  
-Remember to "wave" at the driver for them to stop!
-
-</details>
-
-The ETA colours are calculated with the below formula. To ensure readability, actual yellow (255,255,0) is avoided.
-![RGB Functions](RGBFunction.png)
-
-
-**API references**
-
-Citybus shit
-<https://www.citybus.com.hk/datagovhk/bus_eta_api_specifications.pdf>
-<https://www.citybus.com.hk/datagovhk/bus_eta_data_dictionary.pdf>
-
-KMB shit
-<https://data.etabus.gov.hk/datagovhk/kmb_eta_api_specification.pdf>
-<https://data.etabus.gov.hk/datagovhk/kmb_eta_data_dictionary.pdf>
-
-GMB shit
-<https://data.etagmb.gov.hk/static/GMB_ETA_API_Specification.pdf>
