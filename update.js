@@ -285,7 +285,7 @@ layoutList = {
     earlyPeak: {
         dow: [1, 2, 3, 4, 5],
         startTime: [16, 0],
-        endTime: [18, 40],
+        endTime: [18, 20],
         layout: {
             S1: ["91MZ", "91Z"],
             S2: ["91PZ"],
@@ -380,6 +380,7 @@ async function updateDisplay() {
                     document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(150,150,150)";
                 }
             }
+            // ensure route number goes back to black after being set to grey at midnight
             document.getElementById(layoutKey + "Num").innerText = rtNum.slice(0, -1);
             document.getElementById(layoutKey + "Num").style.color = "black";
 
@@ -438,7 +439,8 @@ async function updateStation(routeNum) {
                 let time_diff = Date.parse(etaRetList[i]) - currentTime;
                 if (time_diff > (content[routeNum].isSouth ? 780_000 : 600_000)) {
                     content[routeNum].content[0] = etaRetList[i];
-                    if (i < 2) {
+                    // if there is another ETA
+                    if (etaRetList.length - i > 1) {
                         content[routeNum].content[1] = etaRetList[i + 1];
                     }
                     return;
