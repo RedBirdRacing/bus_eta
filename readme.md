@@ -1,5 +1,5 @@
 # Bus ETA Report for Hall VIII lab
-Read the Wiki for how to install and use the ETA.  
+Read the [Wiki](https://github.com/RedBirdRacing/bus_eta/wiki) for how to install and use the ETA.  
 
 
 This was made because it was annoying to take out phone and check how long until bus arrives and then run up when it was too late. With this, I can be constantly reminded when to leave the lab.  
