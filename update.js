@@ -368,7 +368,7 @@ async function updateDisplay() {
                     if (delta > 0) {
                         document.getElementById(layoutKey + "_" + i.toString()).innerText = (Math.floor(delta / 60000)).toString();
                         colorDelta = delta - (content[rtNum].isSouth ? 780000 : 600000);
-                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(" + Math.min(Math.max(450 - colorDelta / 2000, 0), 255).toString() + "," + Math.max(Math.min(colorDelta / 2000, 255), 0).toString() + ",0";
+                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(" + Math.min(Math.max(375 - colorDelta / 2400, 0), 255).toString() + "," + Math.max(Math.min(colorDelta / 2400, 255), 0).toString() + ",0";
                     }
                     else {
                         document.getElementById(layoutKey + "_" + i.toString()).innerText = "--";
