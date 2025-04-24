@@ -75,7 +75,7 @@ td.top-right {
 }
 
 .header img {
-    width: 200px;
+    width: 500px;
     height: 200px;
 }
 
@@ -98,6 +98,7 @@ td.top-right {
     font-size: 120px;
     font-family: 'Open Sans';
     font-weight: 600;
+	align-items: center;
 }
 
 #time {
