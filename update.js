@@ -397,6 +397,7 @@ async function updateDisplay() {
             }
         }
     }
+    setTimeout(updateDisplay, 1000);
 }
 // calls api for layout items every (10 (adjustable)) seconds
 async function updateData() {
@@ -407,6 +408,7 @@ async function updateData() {
             }
         }
     }
+    setTimeout(updateData, 10000);
 }
 
 // takes url and puts eta timestamp into content
@@ -529,9 +531,40 @@ async function startClock() {
     }, 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 ms
 }
 
+async function syncTime() {
+    try {
+        const response = await fetch('http://localhost:3000/sync-time');
+        const data = await response.json();
+        console.log(data.message, data.output);
+        currentTime = new Date();
+        document.getElementById('timeSynced').innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
+    } catch (error) {
+        console.error('Failed to sync time:', error);
+    }
+    setTimeout(syncTime, 3600000);
+}
+
+async function updateTime() {
+    currentTime = new Date();
+    document.getElementById('time').innerText = currentTime.toTimeString().split(' ')[0];
+
+    // update global Day of Week, Hour, and Minute
+    dateDoW = currentTime.getDay();
+    dateHour = currentTime.getHours();
+    if (dateMinute != currentTime.getMinutes()) {
+        dateMinute = currentTime.getMinutes();
+        updateLayout();
+    }
+    dateSecond = currentTime.getSeconds();
+    setTimeout(updateTime, 1000);
+}
+
 // initialization
 $(document).ready(() => {
-    startClock();
     // display started by clock
     precalStation(station_list);
+    syncTime();
+    updateTime();
+    updateDisplay();
+    updateData();
 })
