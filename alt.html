@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus ETA Report</title>
+    <script src="jquery.min.js"></script>
+    <script src="update.js"></script>
+    <link rel="stylesheet" href="style.css"> <!-- Link external CSS -->
+</head>
+
+<body>
+    <!-- Background GIF -->
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp" class="background-gif" alt="Background Animation">
+
+    <div class="header" , style="align-items: left;", overflow="hidden">
+        <img class="logo" src="logo-full-v2.0.png" alt="Logo">
+        <div class="title">ETA&nbsp;&nbsp;&nbsp;</div> 
+		<img src="Header.png">
+        <div class="title">&nbsp;&nbsp;&nbsp;</div> 
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <span id="time">Starting</span>
+            <span id="timeSynced">Last synced: syncing</span>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td class="top-left" colspan="3">South Gate</td>
+            <td class="top-right" colspan="3">North Gate</td>
+        </tr>
+        <tr>
+            <td class="tdnum"><span id="S1Num"></span></td>
+            <td class="tddat"><span id="S1_0"></span></td>
+            <td class="tddat"><span id="S1_1"></span></td>
+            <td class="tdnum"><span id="N1Num"></span></td>
+            <td class="tddat"><span id="N1_0"></span></td>
+            <td class="tddat"><span id="N1_1"></span></td>
+        </tr>
+        <tr>
+            <td class="tdnum"><span id="S2Num"></span></td>
+            <td class="tddat"><span id="S2_0"></span></td>
+            <td class="tddat"><span id="S2_1"></span></td>
+            <td class="tdnum"><span id="N2Num"></span></td>
+            <td class="tddat"><span id="N2_0"></span></td>
+            <td class="tddat"><span id="N2_1"></span></td>
+        </tr>
+        <tr>
+            <td class="tdnumBL"><span id="S3Num"></span></td>
+            <td class="tddat"><span id="S3_0"></span></td>
+            <td class="tddat"><span id="S3_1"></span></td>
+            <td class="tdnum"><span id="N3Num"></span></td>
+            <td class="tddat"><span id="N3_0"></span></td>
+            <td class="tddatBR"><span id="N3_1"></span></td>
+        </tr>
+    </table>
+    <p class="p2">nothing to see here</p>
+    <br>
+    <p class="p2">nothing to see here</p>
+    <br>
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp">
+    <br>
+    <img src="e8f24a47-9d32-4dcf-beaf-9fc8e4c144ce.webp">
+</body>
+
+</html>
