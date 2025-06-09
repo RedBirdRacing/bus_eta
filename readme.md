@@ -7,7 +7,7 @@ In Hall VIII, the ETA is run by a Raspberry Pi.
 First project by Side project and Yapping sub team of Red Bird Racing EVRT.  
 Read the wiki to learn how to install and use the ETA.  
 
-Latest version is currently V2.4\[Koel], maintained by [@Planeson](https://github.com/Planeson).
+Latest version is currently V2.4.1 \[Koel], maintained by [@Planeson](https://github.com/Planeson).
 
 ## Screenshot
 ![V2.1 screenshot](https://github.com/user-attachments/assets/50e39dd6-cab3-40d8-9098-df761550e82e)
