@@ -244,7 +244,7 @@ layoutList = {
     midnight2: {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 35],
-        endTime: [5, 50],
+        endTime: [5, 30],
         layout: {
             S1: ["11SZ"],
             S2: ["--"],
@@ -257,7 +257,7 @@ layoutList = {
     midnight1: {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 5],
-        endTime: [5, 50],
+        endTime: [5, 30],
         layout: {
             S1: ["11SZ"],
             S2: ["11Z"],
