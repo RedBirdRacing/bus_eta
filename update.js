@@ -219,7 +219,7 @@ async function precalStation(routeList) {
     for (const [stnKey, stnAtt] of Object.entries(routeList)) {
         switch (stnAtt.type) {
             case "gmb":
-                content[stnKey].url = `https://data.etagmb.gov.hk/eta/route-stop/${stnAtt["route-id"]}/${stnAtt["route-seq"]}/${stnAtt["stop-seq"]}`;
+                content[stnKey].url = `http://localhost:3000/proxy?url=https://data.etagmb.gov.hk/eta/route-stop/${stnAtt["route-id"]}/${stnAtt["route-seq"]}/${stnAtt["stop-seq"]}`;
                 break;
             case "kmb":
                 content[stnKey].url = `https://data.etabus.gov.hk/v1/transport/kmb/eta/${stnAtt["stop-id"]}/${stnAtt["route-id"]}/${stnAtt["route-seq"]}`;
@@ -415,8 +415,7 @@ async function updateData() {
 async function updateStation(routeNum) {
     if (routeNum == "--") { return; }
     try {
-        const originalUrl = content[routeNum].url;
-        const proxyUrl = `http://localhost:3000/proxy?url=${encodeURIComponent(originalUrl)}`;
+        const proxyUrl = content[routeNum].url;
 
         const response = await fetch(proxyUrl);
         if (!response.ok) {
