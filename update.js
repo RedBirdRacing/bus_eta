@@ -261,9 +261,22 @@ layoutList = {
             ["11SZ"],
             ["11Z"],
             ["--"],
+            ["91MY"], // why 91MY so late
             ["11SY"],
-            ["11MZ"],
-            ["11Y"],
+            [],
+        ]
+    },
+    midnight0: {
+        dow: [-1, 0, 1, 2, 3, 4, 5, 6],
+        startTime: [23, 45],
+        endTime: [5, 30],
+        layout: [
+            ["11SZ"],
+            ["11Z"],
+            ["--"],
+            ["91MY"], // why 91MY so late
+            ["11SY"],
+            ["11MZ","11Y"],
         ]
     },
     // return peak -> 91P + 291P (lol)
