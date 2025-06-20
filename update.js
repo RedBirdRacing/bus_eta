@@ -245,95 +245,112 @@ layoutList = {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 35],
         endTime: [5, 30],
-        layout: {
-            S1: ["11SZ"],
-            S2: ["--"],
-            S3: ["--"],
-            N1: ["11SY"],
-            N2: ["--"],
-            N3: ["--"],
-        }
+        layout: [
+            ["11SZ"],
+            ["--"],
+            ["--"],
+            ["11SY"],
+            ["--"],
+            ["--"]]
     },
     midnight1: {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 5],
         endTime: [5, 30],
-        layout: {
-            S1: ["11SZ"],
-            S2: ["11Z"],
-            S3: ["--"],
-            N1: ["11SY"],
-            N2: ["11MZ"],
-            N3: ["11Y"],
-        }
+        layout: [
+            ["11SZ"],
+            ["11Z"],
+            ["--"],
+            ["11SY"],
+            ["11MZ"],
+            ["11Y"],
+        ]
     },
     // return peak -> 91P + 291P (lol)
     peak: {
         dow: [1, 2, 3, 4, 5],
         startTime: [17, 0],
         endTime: [18, 0],
-        layout: {
-            S1: ["91MZ", "91Z"],
-            S2: ["91PZ", "291PY"],
-            S3: ["11Z", "11Z", "104Y"],
-            N1: ["792MZ"],
-            N2: ["91MY"],
-            N3: ["11MZ", "11Y"],
-        }
+        layout: [
+            ["91MZ", "91Z"],
+            ["91PZ", "291PY"],
+            ["11Z", "11Z", "104Y"],
+            ["792MZ"],
+            ["91MY"],
+            ["11MZ", "11Y"],
+        ]
     },
     // early return peak -> 91P
     earlyPeak: {
         dow: [1, 2, 3, 4, 5],
         startTime: [16, 0],
         endTime: [18, 20],
-        layout: {
-            S1: ["91MZ", "91Z"],
-            S2: ["91PZ"],
-            S3: ["11Z", "11Z", "104Y"],
-            N1: ["792MZ"],
-            N2: ["91MY"],
-            N3: ["11MZ", "11Y"],
-        }
+        layout: [
+            ["91MZ", "91Z"],
+            ["91PZ"],
+            ["11Z", "11Z", "104Y"],
+            ["792MZ"],
+            ["91MY"],
+            ["11MZ", "11Y"],
+        ]
     },
     // no 104
     normal: {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 0],
         endTime: [20, 55],
-        layout: {
-            S1: ["91MZ"],
-            S2: ["91Z"],
-            S3: ["11Z", "11Z", "104Y"],
-            N1: ["792MZ"],
-            N2: ["91MY"],
-            N3: ["11MZ", "11Y"],
-        }
+        layout: [
+            ["91MZ"],
+            ["91Z"],
+            ["11Z", "11Z", "104Y"],
+            ["792MZ"],
+            ["91MY"],
+            ["11MZ", "11Y"],
+        ]
     },
     // default + fallback
     fullDay: {
         dow: [-1, 0, 1, 2, 3, 4, 5, 6],
         startTime: [0, 0],
         endTime: [23, 59],
-        layout: {
-            S1: ["91MZ"],
-            S2: ["91Z"],
-            S3: ["11Z"],
-            N1: ["792MZ"],
-            N2: ["91MY"],
-            N3: ["11MZ", "11Y"],
-        }
+        layout: [
+            ["91MZ"],
+            ["91Z"],
+            ["11Z"],
+            ["792MZ"],
+            ["91MY"],
+            ["11MZ", "11Y"],
+        ]
     }
 }
 
 // pull layout out to reduce access depth
-layout = {
-    S1: [],
-    S2: [],
-    S3: [],
-    N1: [],
-    N2: [],
-    N3: [],
-};
+layout = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+];
+
+// html elements
+const htmlElements = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+];
+
+function precalElements(elements) {
+    for (let i = 0; i < elements.length; ++i) {
+        for (let j = 0; j < elements[i].length; ++j) {
+            elements[i][j] = document.getElementById('D' + i.toString() + j.toString());
+        }
+    }
+}
 
 // checks the layout to be used and set layout to it
 async function updateLayout() {
@@ -352,53 +369,99 @@ async function updateLayout() {
     }
 }
 
-// updates display every second using existing data
-async function updateDisplay() {
-    for (const [layoutKey, rtList] of Object.entries(layout)) {
-        const displayTime = 4 // 4 seconds each for flipping displays
-        cycleLength = displayTime * rtList.length;
-        rtNum = rtList[Math.floor((dateSecond % cycleLength) / displayTime)];
+// Helper function to set display value and color
+function setElem(id, value, color) {
+    const elem = document.getElementById(id);
+    if (elem) {
+        elem.innerText = value;
+        elem.style.color = color;
+    }
+}
 
-        // short-circuit evaluation, if first condition false everything skipped
-        // if rtNum isn't empty, content type is ETA, ETA exist
-        if (rtNum != "" && (content[rtNum].type == "gmb" || content[rtNum].type == "kmb" || content[rtNum].type == "ctb") && content[rtNum].content) {
-            for (var i = 0; i < 2; ++i) {
-                if (content[rtNum].content[i] && content[rtNum].content[i] != "--") {
-                    delta = Date.parse(content[rtNum].content[i]) - currentTime;
-                    if (delta > 0) {
-                        document.getElementById(layoutKey + "_" + i.toString()).innerText = (Math.floor(delta / 60000)).toString();
-                        colorDelta = delta - (content[rtNum].isSouth ? 780000 : 600000);
-                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(" + Math.min(Math.max(375 - colorDelta / 2400, 0), 255).toString() + "," + Math.max(Math.min(colorDelta / 2400, 255), 0).toString() + ",0";
-                    }
-                    else {
-                        document.getElementById(layoutKey + "_" + i.toString()).innerText = "--";
-                        document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(150,150,150)";
-                    }
+// updates display every second using existing data
+function updateDisplay() {
+    const displayTime = 3 // 3 seconds each for flipping displays, choose factors of 60
+    const updates = []; // array to hold updates for all elements
+
+    // --updateTime logic--
+    currentTime = new Date();
+    updates.push([document.getElementById('time'), currentTime.toTimeString().split(' ')[0], undefined]); // undefined means don't change color
+
+    // update global Day of Week, Hour, and Minute
+
+    // disable 91P for now
+    // dateDoW = currentTime.getDay();
+
+    dateHour = currentTime.getHours();
+    if (dateMinute != currentTime.getMinutes()) {
+        dateMinute = currentTime.getMinutes();
+        updateLayout();
+    }
+    dateSecond = currentTime.getSeconds();
+
+    for (i = 0; i < layout.length; ++i) {
+        const cycleLength = displayTime * layout[i].length;
+        const rtNum = layout[i][Math.floor((dateSecond % cycleLength) / displayTime)];
+
+        // first exit condition: null ETA
+        if (rtNum == "--") {
+            updates.push([document.getElementById('N' + i), "--", "rgb(150,150,150)"]);
+            updates.push([document.getElementById('D' + i + '0'), "--", "rgb(150,150,150)"]);
+            updates.push([document.getElementById('D' + i + '1'), "--", "rgb(150,150,150)"]);
+            continue;
+        }
+
+        if (rtNum == "")
+            continue; // skip broken data
+
+        if (!["gmb", "kmb", "ctb"].includes(content[rtNum].type)) {
+            continue; // skip non-ETA data, can add new types here
+        }
+
+        if (!content[rtNum].content)
+            continue; // skip broken data
+
+        for (let j = 0; j < 2; ++j) {
+            if (content[rtNum].content[j] && content[rtNum].content[j] != "--") {
+                const delta = Date.parse(content[rtNum].content[j]) - currentTime;
+                if (delta > 0) {
+                    colorDelta = delta - (content[rtNum].isSouth ? 780000 : 600000);
+                    const r = Math.min(Math.max(375 - colorDelta / 2400, 0), 255);
+                    const g = Math.max(Math.min(colorDelta / 2400, 255), 0);
+                    updates.push([
+                        document.getElementById('D' + i + j),
+                        Math.floor(delta / 60000).toString(),
+                        `rgb(${r},${g},0)`
+                    ]);
                 }
                 else {
-                    document.getElementById(layoutKey + "_" + i.toString()).innerText = "--";
-                    document.getElementById(layoutKey + "_" + i.toString()).style.color = "rgb(150,150,150)";
+                    updates.push([document.getElementById('D' + i + j), "--", "rgb(150,150,150)"]);
                 }
             }
-            // ensure route number goes back to black after being set to grey at midnight
-            document.getElementById(layoutKey + "Num").innerText = rtNum.slice(0, -1);
-            document.getElementById(layoutKey + "Num").style.color = "black";
-
-        }
-        // for "--" rtNum or invalid ETA (content "--")
-        else if (rtNum != "") {
-            document.getElementById(layoutKey + "_0").innerText = content[rtNum].content[0];
-            document.getElementById(layoutKey + "_1").innerText = content[rtNum].content[1];
-            document.getElementById(layoutKey + "Num").innerText = rtNum;
-            if (rtNum == "--") {
-                document.getElementById(layoutKey + "Num").style.color = "rgb(150,150,150)";
-                document.getElementById(layoutKey + "_0").style.color = "rgb(150,150,150)";
-                document.getElementById(layoutKey + "_1").style.color = "rgb(150,150,150)";
+            else {
+                updates.push([document.getElementById('D' + i + j), "--", "rgb(150,150,150)"]);
             }
         }
+        // ensure route number goes back to black after being set to grey at midnight
+        updates.push([document.getElementById('N' + i), rtNum.slice(0, -1), "black"]);
+        continue;
     }
-    setTimeout(updateDisplay, 1000);
+    // not handling non-ETA in this function
+    //if (rtNum != "") {
+    //    document.getElementById(layoutKey + "_0").innerText = content[rtNum].content[0];
+    //    document.getElementById(layoutKey + "_1").innerText = content[rtNum].content[1];
+    //    document.getElementById(layoutKey + "Num").innerText = rtNum;
+    //}
+
+    // Apply all updates at once
+    for (const [elem, value, color] of updates) {
+        if (elem) {
+            elem.innerText = value;
+            elem.style.color = color;
+        }
+    }
 }
+
 // calls api for layout items every (10 (adjustable)) seconds
 async function updateData() {
     for (const [layoutKey, rtList] of Object.entries(layout)) {
@@ -415,9 +478,7 @@ async function updateData() {
 async function updateStation(routeNum) {
     if (routeNum == "--") { return; }
     try {
-        const proxyUrl = content[routeNum].url;
-
-        const response = await fetch(proxyUrl);
+        const response = await fetch(content[routeNum].url);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
@@ -429,53 +490,33 @@ async function updateStation(routeNum) {
 
         if (routeType === "gmb") {
             etaRetList = data["data"]["eta"].map(item => item["timestamp"]);
-        } else if (["kmb", "ctb"].includes(routeType)) {
+        } else if (routeType === "kmb") {
             etaRetList = data["data"].map(item => item["eta"]);
+        } else { // if (routeType === "ctb") {
+            etaRetList = data["data"]
+                .filter(item => item["dir"] === "I") // fuck CTB using North gate for both directions
+                .map(item => item["eta"]);
         }
 
-        if (etaRetList && etaRetList.length > 0) {
-            content[routeNum].content[0] = "--";
-            content[routeNum].content[1] = "--";
-            for (let i = 0; i < etaRetList.length; ++i) {
-                let time_diff = Date.parse(etaRetList[i]) - currentTime;
-                if (time_diff > (content[routeNum].isSouth ? 780_000 : 600_000)) {
-                    content[routeNum].content[0] = etaRetList[i];
-                    // if there is another ETA
-                    if (etaRetList.length - i > 1) {
-                        content[routeNum].content[1] = etaRetList[i + 1];
-                    }
-                    return;
-                }
+        if (!etaRetList || etaRetList.length < 0)
+            return;
+        content[routeNum].content[0] = "--";
+        content[routeNum].content[1] = "--";
+        for (let i = 0; i < etaRetList.length; ++i) {
+            let time_diff = Date.parse(etaRetList[i]) - currentTime;
+            if (time_diff > (content[routeNum].isSouth ? 780_000 : 600_000)) {
+                content[routeNum].content[0] = etaRetList[i];
+                // if there is another ETA
+                if (etaRetList.length - i > 1)
+                    content[routeNum].content[1] = etaRetList[i + 1];
+                return;
             }
         }
+
     }
     catch (error) {
         console.error(error.message);
         console.log(routeNum);
-    }
-}
-
-// clock function to get internet time
-async function fetchTime(retries = 100, delay = 200) {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-            // apis unstable
-            let response = await fetch('https://www.timeapi.io/api/timezone/zone?timeZone=Asia%2FHong_Kong', { cache: "no-store" });
-            //let response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Hong_Kong', { cache: "no-store" });
-
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            let data = await response.json();
-            return new Date(data.currentLocalTime);
-            //return new Date(data.utc_datetime); // Successfully fetched time
-        } catch (error) {
-            console.error(`Attempt ${attempt} failed:`, error);
-            if (attempt < retries) {
-                await new Promise(resolve => setTimeout(resolve, delay * attempt)); // Exponential backoff
-            } else {
-                console.error("All retry attempts failed.");
-                return new Date(); // Return local time as fallback
-            }
-        }
     }
 }
 
@@ -485,50 +526,8 @@ dateHour = -1;
 dateMinute = -1;
 dateSecond = -1;
 
-// initializes clock
-var currentTime;
-async function startClock() {
-    currentTime = await fetchTime();
-
-    // Add milliseconds for slow computers (includes Raspberry Pi) or testing only
-    // For hall 8, add 800 ms
-    // currentTime = new Date(currentTime.getTime() + 800);
-    // currentTime = new Date(currentTime.getTime() - 300000);
-
-    document.getElementById('timeSynced').innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
-    console.log("Time synced successfully at: " + currentTime.toTimeString().split(' ')[0]);
-
-    function updateClock() {
-        currentTime = new Date(currentTime.getTime() + 1000);
-        document.getElementById('time').innerText = currentTime.toTimeString().split(' ')[0];
-
-        // update global Day of Week, Hour, and Minute
-        dateDoW = currentTime.getDay();
-        dateHour = currentTime.getHours();
-        if (dateMinute != currentTime.getMinutes()) {
-            dateMinute = currentTime.getMinutes();
-            updateLayout();
-        }
-        dateSecond = currentTime.getSeconds();
-    }
-
-    // Align first update with the next full second
-    let msToNextSecond = 1000 - (currentTime.getMilliseconds());
-    setTimeout(() => {
-        updateClock(); // First update precisely at the next full second
-        setInterval(updateClock, 1000);
-        setInterval(updateDisplay, 1000);
-        setInterval(updateData, 10000);
-    }, msToNextSecond);
-
-    // Resync every hour
-    setInterval(async () => {
-        console.log("Resyncing clock...");
-        currentTime = await fetchTime();
-        document.getElementById('timeSynced').innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
-        console.log("Synced successfully at: " + currentTime.toTimeString().split(' ')[0]);
-    }, 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 ms
-}
+let elemTimeSynced = null;
+let elemTime = null;
 
 async function syncTime() {
     try {
@@ -536,34 +535,21 @@ async function syncTime() {
         const data = await response.json();
         console.log(data.message, data.output);
         currentTime = new Date();
-        document.getElementById('timeSynced').innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
+        elemTimeSynced.innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
     } catch (error) {
         console.error('Failed to sync time:', error);
     }
     setTimeout(syncTime, 3600000);
 }
 
-async function updateTime() {
-    currentTime = new Date();
-    document.getElementById('time').innerText = currentTime.toTimeString().split(' ')[0];
-
-    // update global Day of Week, Hour, and Minute
-    dateDoW = currentTime.getDay();
-    dateHour = currentTime.getHours();
-    if (dateMinute != currentTime.getMinutes()) {
-        dateMinute = currentTime.getMinutes();
-        updateLayout();
-    }
-    dateSecond = currentTime.getSeconds();
-    setTimeout(updateTime, 1000);
-}
-
 // initialization
 $(document).ready(() => {
     // display started by clock
+    elemTimeSynced = document.getElementById('timeSynced');
+    elemTime = document.getElementById('time');
     precalStation(station_list);
+    precalElements(htmlElements);
     syncTime();
-    updateTime();
-    updateDisplay();
+    setInterval(updateDisplay, 1000);
     updateData();
 })
