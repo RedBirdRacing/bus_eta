@@ -263,7 +263,7 @@ layoutList = {
             ["--"],
             ["91MY"], // why 91MY so late
             ["11SY"],
-            [],
+            ["--"],
         ]
     },
     midnight0: {
@@ -424,7 +424,7 @@ function updateDisplay() {
             continue;
         }
 
-        if (rtNum == "")
+        if (rtNum == "" || rtNum == null)
             continue; // skip broken data
 
         if (!["gmb", "kmb", "ctb"].includes(content[rtNum].type)) {
