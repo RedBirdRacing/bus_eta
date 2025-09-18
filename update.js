@@ -548,7 +548,7 @@ async function syncTime() {
         const data = await response.json();
         console.log(data.message, data.output);
         currentTime = new Date();
-        elemTimeSynced.innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
+        //elemTimeSynced.innerText = "Last synced: " + currentTime.toTimeString().split(' ')[0];
     } catch (error) {
         console.error('Failed to sync time:', error);
     }

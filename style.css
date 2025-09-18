@@ -102,10 +102,12 @@ td.top-right {
 }
 
 #time {
-    font-size: 140px;
+    font-size: 220px;
     font-family: 'Open Sans';
     font-weight: 600;
     line-height: 1.1;
+    margin-top: -20px; /* Move the time element up */
+    display: inline-block; /* Ensure margin works as expected */
 }
 
 #timeSynced {
