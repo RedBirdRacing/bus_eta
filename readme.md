@@ -7,9 +7,10 @@ In Hall VIII, the ETA is run by a Raspberry Pi.
 First project by Side project and Yapping sub team of Red Bird Racing EVRT.  
 Read the wiki to learn how to install and use the ETA.  
 
-Latest version is currently V2.4.1 \[Koel], maintained by [@Planeson](https://github.com/Planeson).
+Latest version is currently V2.5 \[Cheetah], maintained by [@Planeson](https://github.com/Planeson).
 
 ## Screenshot
+_Outdated_
 ![V2.1 screenshot](https://github.com/user-attachments/assets/50e39dd6-cab3-40d8-9098-df761550e82e)
 
-Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out.
+Meant for 1080p displays. For other resolutions, you are suggested to simply zoom in and out. While most of the page is written with different aspect ratios and resolutions in mind, some parts are still stuck with absolute values. If you have made a version for other resolutions / aspect ratios, feel free to create a pull request.
